@@ -1,15 +1,32 @@
-import React from 'react'
-import './Banner.css';
-function Banner() {
+import React,{ useEffect, useState} from 'react';
+import './banner.css';
+import {imageUrl } from '../../Constants/constants';
+import axios from '../../axios';
+
+function Banner(props) {
+  const [movie,setMovie] = useState([]);
+  const [count,setCount]=useState(0);
+  const addCount =()=>{
+    setCount(count+1);
+  };
+  useEffect(() =>{
+    axios.get(props.url)
+      .then((response) =>{
+        console.log(response.data.results[count]);
+        setMovie(response.data.results[count]);
+      });
+  },[count,props.url]);
   return (
-    <div className='banner'>
+    <div onClick={addCount}
+     style ={{backgroundImage:`url(${movie ? imageUrl+ movie.backdrop_path :""})`}}
+     className='banner'>
       <div className='content'>
-            <h1 className='title'>Movie Name</h1>
+            <h1 className='title'>{movie ? movie.name || movie.title : ""}</h1>
             <div className='banner_buttons'>
-                <button className='button'>Play</button>
+                <button  className='button'>Play</button>
                 <button className='button'>My list</button>
             </div>
-                <h1 className='description'>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.</h1>
+                  <h1 className='description'>{movie ? movie.overview : ""}</h1>
         </div>
         <div className="fade_bottom">
 
