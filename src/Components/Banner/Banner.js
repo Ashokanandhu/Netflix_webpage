@@ -1,5 +1,5 @@
 import React,{ useEffect, useState} from 'react';
-import './banner.css';
+import './Banner.css';
 import {imageUrl } from '../../Constants/constants';
 import axios from '../../axios';
 
